@@ -111,10 +111,10 @@
     const wrap = document.createElement('div');
     wrap.style.cssText = `
       display:flex;align-items:center;gap:12px;font-weight:600;
-      letter-spacing:.2px;white-space:nowrap;font-size:32px;`;
+      letter-spacing:.2px;white-space:nowrap;font-size:64px;`;
     const mk = (label,id) => {
       const box=document.createElement('div');
-      box.style.cssText='display:flex;align-items:center;gap:6px;font-size:32px;';
+      box.style.cssText='display:flex;align-items:center;gap:6px;font-size:64px;';
       const tag=document.createElement('span');
       tag.textContent=label;
       tag.style.cssText='font-size:11px;opacity:.7;';
@@ -149,8 +149,8 @@
     const imEl = box.querySelector('#im-val');
     const mmEl = box.querySelector('#mm-val');
     if (!imEl || !mmEl) return;
-    imEl.textContent = im != null ? im.toFixed(1)+'%' : '--';
-    mmEl.textContent = mm != null ? mm.toFixed(1)+'%' : '--';
+    imEl.textContent = im != null ? im.toFixed(1) : '--';
+    mmEl.textContent = mm != null ? mm.toFixed(1) : '--';
     imEl.style.color = colorFor(im);
     mmEl.style.color = colorFor(mm);
   }
