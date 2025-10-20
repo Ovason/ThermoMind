@@ -1,6 +1,8 @@
 (() => {
   const SELECTOR_IM  = '.css-1dur6yd';   // 你验证过的 IM
+  const SELECTOR_IM_2 = '.css-1lpbzkm';
   const SELECTOR_MM  = '.css-nkamo5';    // 你验证过的 MM
+  const SELECTOR_MM_2 = '.css-1dur6yd';
   const BOX_SELECTOR = '.css-1st174s';   // 要接管的容器
   const FIND_RETRY_MS = 1000;            // 找容器的间隔
   const FIND_MAX_TRY  = 90;              // 最多找 90 次（约 1.5 分钟）
@@ -14,6 +16,13 @@
     const n = parseFloat(s);
     return Number.isFinite(n) ? n : null;
   };
+
+  // 失活函数
+  const keepLive = (p) => {
+    const v = Math.max(0, Math.min(100, p));
+    return v < 20 || v > 85 ? '--' : p.toFixed(1);
+  };
+
   // 高敏色温：
   //  - 40–65% 为最适区（绿色系，稳定）
   //  - <20% 冷灰（失去生命力）；20–40% 冷色快速过渡到绿
@@ -98,7 +107,10 @@
   // 读 IM / MM（优先主文档，读不到再深度找）
   function readIMMM() {
     let imEl = document.querySelectorAll(SELECTOR_IM)[0];
+    imEl = !imEl ? document.querySelectorAll(SELECTOR_IM_2)[0] : imEl;
     let mmEl = document.querySelectorAll(SELECTOR_MM)[0];
+    mmEl = !mmEl ? document.querySelectorAll(SELECTOR_IM)[1] : mmEl;
+    
     if (!imEl) imEl = queryDeep(SELECTOR_IM);
     if (!mmEl) mmEl = queryDeep(SELECTOR_MM);
     const im = imEl ? parsePct(imEl.textContent) : null;
@@ -119,7 +131,8 @@
       tag.textContent=label;
       tag.style.cssText='font-size:11px;opacity:.7;';
       const val=document.createElement('span');
-      val.id=id;val.textContent='--';
+      val.id=id;
+      val.textContent='--';
       val.style.cssText='min-width:56px;text-align:right;';
       box.appendChild(tag);box.appendChild(val);
       return box;
@@ -149,8 +162,8 @@
     const imEl = box.querySelector('#im-val');
     const mmEl = box.querySelector('#mm-val');
     if (!imEl || !mmEl) return;
-    imEl.textContent = im != null ? im.toFixed(1) : '--';
-    mmEl.textContent = mm != null ? mm.toFixed(1) : '--';
+    imEl.textContent = im != null ? keepLive(im) : '--';
+    mmEl.textContent = mm != null ? keepLive(mm) : '--';
     imEl.style.color = colorFor(im);
     mmEl.style.color = colorFor(mm);
   }
