@@ -110,6 +110,11 @@
     imEl = !imEl ? document.querySelectorAll(SELECTOR_IM_2)[0] : imEl;
     let mmEl = document.querySelectorAll(SELECTOR_MM)[0];
     mmEl = !mmEl ? document.querySelectorAll(SELECTOR_IM)[1] : mmEl;
+
+    if (!imEl) {
+        imEl = document.querySelectorAll(SELECTOR_MM)[0];
+        mmEl = document.querySelectorAll(SELECTOR_MM)[1];
+    }
     
     if (!imEl) imEl = queryDeep(SELECTOR_IM);
     if (!mmEl) mmEl = queryDeep(SELECTOR_MM);
