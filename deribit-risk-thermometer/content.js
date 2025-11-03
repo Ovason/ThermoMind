@@ -115,7 +115,12 @@
         imEl = document.querySelectorAll(SELECTOR_MM)[0];
         mmEl = document.querySelectorAll(SELECTOR_MM)[1];
     }
-    
+
+    if (!mmEl) {
+        imEl = document.querySelectorAll(SELECTOR_IM_2)[0];
+        mmEl = document.querySelectorAll(SELECTOR_MM_2)[0];
+    }
+
     if (!imEl) imEl = queryDeep(SELECTOR_IM);
     if (!mmEl) mmEl = queryDeep(SELECTOR_MM);
     const im = imEl ? parsePct(imEl.textContent) : null;
